@@ -52,9 +52,9 @@ function fish_prompt
 
   # Git stuff
   set -l git_info
-  if [ (command git rev-parse --is-inside-work-tree ^/dev/null) ]
+  if [ (command git rev-parse --is-inside-work-tree 2> /dev/null) ]
     # Get the current branch name/commit
-    set -l git_branch_name (command git symbolic-ref HEAD ^/dev/null | sed -e 's|^refs/heads/||')
+    set -l git_branch_name (command git symbolic-ref HEAD 2> /dev/null | sed -e 's|^refs/heads/||')
     if [ -z $git_branch_name ]
       set git_branch_name (command git show-ref --head -s --abbrev | head -n1 2> /dev/null)
     end
