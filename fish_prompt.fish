@@ -11,6 +11,8 @@ function fish_prompt
   set -l magenta (set_color magenta)
   set -l white (set_color white)
   set -l normal (set_color normal)
+  set -l maroon (set_color a54242)
+  # More colors: http://terminal.sexy
 
   # Prints first argument left-aligned, second argument right-aligned, newline
   function _rprint
@@ -69,6 +71,11 @@ function fish_prompt
     set git_info "$git_info "
   end
 
+  if set -q VIRTUAL_ENV
+    set vf_info (basename "$VIRTUAL_ENV")
+    set vf_info "$maroon""[$vf_info]"
+  end
+
   # Job count
   set -l job_info
   set -l job_count (jobs -c | wc -l | awk '{ print $1; }')
@@ -93,7 +100,7 @@ function fish_prompt
   if [ -n $status_info ]
     echo -s $status_info
   end
-  _rprint "$basic_prompt$git_info" $job_info
+  _rprint "$basic_prompt$git_info$vf_info" $job_info
   echo -n -s $prompt
 
 end
